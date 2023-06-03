@@ -43,6 +43,7 @@ def preprocesar_archivo_situacion_laboral(file: str, directory: str):
 
     new_df['año'] = 2014
     new_df['pais'] = 'Spain'
+    new_df['cantidad'] = new_df['cantidad'].astype(int)
 
     new_df[[
         'año', 'pais', 'tipo_universidad',	'area_estudio',	'sexo',	'situacion_laboral',	'cantidad'
