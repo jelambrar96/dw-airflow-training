@@ -1,11 +1,13 @@
 import csv
 import logging
 
+import pandas as pd
+
 from airflow.hooks.mysql_hook import MySqlHook
 
 
 # https://gist.github.com/imamdigmi/f11a9a9e1ab88d2d9e0c3ad626c4ec2d
-def func_bulk_load_sql(csv_file, table_name, mysql_conn_id):
+def func_bulk_load_sql_2(csv_file, table_name, mysql_conn_id):
     local_filepath = csv_file
     """
     conn = MySqlHook(mysql_conn_id='conexion_mysql_root')
@@ -30,3 +32,16 @@ def func_bulk_load_sql(csv_file, table_name, mysql_conn_id):
         cursor.execute(q)
     conn.commit()
     cursor.close()
+
+
+# https://gist.github.com/imamdigmi/f11a9a9e1ab88d2d9e0c3ad626c4ec2d
+def func_bulk_load_sql(csv_file, table_name, mysql_conn_id):
+    # local_filepath = csv_file
+    """
+    conn = MySqlHook(mysql_conn_id='conexion_mysql_root')
+    conn.bulk_load(table_name, local_filepath)
+    return table_name
+    """
+    df = pd.read_csv(csv_file)
+    mysqlHook = MySqlHook(mysql_conn_id=mysql_conn_id)
+    mysqlHook.insert_rows(table=table_name, rows=df.values.tolist(), target_fields=list(df.columns))
