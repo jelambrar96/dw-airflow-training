@@ -12,6 +12,16 @@ CSV_FILE = "/tmp/data/raw/grad_5sc.csv"
 OUT_CSV_FILE = "/tmp/data/processed/grad_5sc.csv"
 
 
+
+def func_detect_sexo(x):
+    tempx = x.lower()
+    if "mujer" in tempx:
+        return "Femenino"
+    elif "hombre" in tempx:
+        return "Masculino"
+    else :
+        return x
+
 # ------------------------------------------------------------------------------------
 
 def func_preprocessing_csv(in_file, out_file):
@@ -27,7 +37,8 @@ def func_preprocessing_csv(in_file, out_file):
     raw_df["cod_ambito"] = raw_df["cod_ambito_full"].apply(lambda x: x[:12])
     raw_df["ambito"] = raw_df["cod_ambito_full"].apply(lambda x: x[15:])
     raw_df["pais"] = "Spain"
-    # raw_df["año"] = "2023"
+    raw_df["sexo"] = raw_df["sexo"].apply(lambda x: func_detect_sexo(x))
+    raw_df["año"] = 2017
     raw_df = raw_df.drop(columns=["cod_ambito_full"])
     raw_df.to_csv(out_file,index=False)
 
