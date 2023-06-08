@@ -242,7 +242,7 @@ task_drop_dimm_sexo = MySqlOperator(
 
 query_create_dimm_sexo = """
 CREATE TABLE IF NOT EXISTS dimm_sexo (
-	id INTEGER PRIMARY KEY,
+	id INTEGER AUTO_INCREMENT PRIMARY KEY,
 	desc_sexo VARCHAR(255) NOT NULL
 );
 """
@@ -319,7 +319,7 @@ task_drop_dimm_rama_ensenanza = MySqlOperator(
 
 query_create_dimm_rama_ensenanza = """
 CREATE TABLE IF NOT EXISTS dimm_rama_enseñanza (
-	id INTEGER PRIMARY KEY,
+	id INTEGER AUTO_INCREMENT PRIMARY KEY,
 	nombre_rama VARCHAR(255)
 );
 """
