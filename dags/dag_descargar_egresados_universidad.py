@@ -15,6 +15,18 @@ OUT_CSV_FILE_SEGR2 = "/tmp/data/processed/SEGR2.csv"
 CSV_FILE_SEGR1 = "/tmp/data/raw/SEGR1.csv"
 OUT_CSV_FILE_SEGR1 = "/tmp/data/processed/SEGR1.csv"
 
+
+# ------------------------------------------------------------------------------------
+
+def func_detect_tipo_universidad(x):
+    tempx = x.lower()
+    if "privada" in tempx:
+        return "Privada"
+    elif "pública" in tempx or "publica" in tempx:
+        return "Pública"
+    else :
+        return x
+
 # ------------------------------------------------------------------------------------
 
 def func_preprocessing_csv(in_file, out_file):
