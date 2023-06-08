@@ -1,2 +1,2 @@
 from .helper import preprocesar_archivo_situacion_laboral, cargar_archivo_situacion_laboral
-from .load_database import func_bulk_load_sql
+from .load_database import func_bulk_load_sql, func_download_dataframe, func_load_dataframe

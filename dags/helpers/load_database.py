@@ -34,14 +34,22 @@ def func_bulk_load_sql_2(csv_file, table_name, mysql_conn_id):
     cursor.close()
 
 
-# https://gist.github.com/imamdigmi/f11a9a9e1ab88d2d9e0c3ad626c4ec2d
 def func_bulk_load_sql(csv_file, table_name, mysql_conn_id):
     # local_filepath = csv_file
-    """
-    conn = MySqlHook(mysql_conn_id='conexion_mysql_root')
-    conn.bulk_load(table_name, local_filepath)
-    return table_name
-    """
     df = pd.read_csv(csv_file)
     mysqlHook = MySqlHook(mysql_conn_id=mysql_conn_id)
     mysqlHook.insert_rows(table=table_name, rows=df.values.tolist(), target_fields=list(df.columns))
+
+
+def func_load_dataframe(df, table_name, mysql_conn_id):
+    mysqlHook = MySqlHook(mysql_conn_id=mysql_conn_id)
+    mysqlHook.insert_rows(table=table_name, rows=df.values.tolist(), target_fields=list(df.columns))
+
+
+def func_download_dataframe(fields, table, mysql_conn_id):
+    fields_str = ", ".join(fields)
+    query = "SELECT DISTINCT {} FROM {}".format(fields_str, table)
+    mysqlHook = MySqlHook(mysql_conn_id=mysql_conn_id)
+    results = mysqlHook.get_records(sql=query)
+    df = pd.DataFrame(results, columns=fields) if results else pd.DataFrame(columns=fields)
+    return df
