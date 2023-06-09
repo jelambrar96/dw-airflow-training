@@ -344,7 +344,7 @@ task_drop_dimm_ambito_ensenanza = MySqlOperator(
 
 query_create_dimm_ambito_ensenanza = """
 CREATE TABLE IF NOT EXISTS dimm_ambito_enseñanza (
-	id VARCHAR(255),
+	id VARCHAR(255) PRIMARY KEY,
     desc_ambito VARCHAR(255),
     id_rama VARCHAR(255),
 	nombre_rama VARCHAR(255)
