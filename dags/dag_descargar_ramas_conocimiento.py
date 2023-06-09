@@ -15,7 +15,7 @@ OUT_CSV_FILE = "/tmp/data/processed/ISCED_2013.csv"
 # ------------------------------------------------------------------------------------
 
 def func_preprocessing_csv(in_file, out_file):
-    raw_df = pd.read_csv(in_file, encoding="latin_1", delimiter=";", encoding_errors="ignore")
+    raw_df = pd.read_csv(in_file, encoding="latin_1", delimiter=";", encoding_errors="ignore", dtype=str)
     diccionario_columnas = {
         "COD_RAMA": "codigo_rama_1",
         "NOM_RAMA": "nombre_rama_1",
@@ -29,6 +29,9 @@ def func_preprocessing_csv(in_file, out_file):
         "NOM_RAMA_N5": "nombre_rama_5"
     }
     raw_df = raw_df.rename(columns=diccionario_columnas)
+    columnas_raw_df = [ item for item in raw_df.columns if "codigo" in item]
+    for item in columnas_raw_df:
+        raw_df[item] = "C" + raw_df[item]
     raw_df.to_csv(out_file,index=False)
 
 

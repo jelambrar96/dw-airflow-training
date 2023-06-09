@@ -25,7 +25,7 @@ def func_detect_sexo(x):
 # ------------------------------------------------------------------------------------
 
 def func_preprocessing_csv(in_file, out_file):
-    raw_df = pd.read_csv(in_file, encoding="latin_1", delimiter=";", encoding_errors="ignore")
+    raw_df = pd.read_csv(in_file, encoding="latin_1", delimiter=";", encoding_errors="ignore", dtype=str)
     diccionario_columnas = {
         "SEXO": "sexo",
         "EDAD": "edad",
@@ -34,7 +34,7 @@ def func_preprocessing_csv(in_file, out_file):
         "COD_AMBITO": "cod_ambito_full"
     }
     raw_df = raw_df.rename(columns=diccionario_columnas)
-    raw_df["cod_ambito"] = raw_df["cod_ambito_full"].apply(lambda x: x[:12])
+    raw_df["cod_ambito"] = raw_df["cod_ambito_full"].apply(lambda x: "C" + str(x[8:12]))
     raw_df["ambito"] = raw_df["cod_ambito_full"].apply(lambda x: x[15:])
     raw_df["pais"] = "Spain"
     raw_df["sexo"] = raw_df["sexo"].apply(lambda x: func_detect_sexo(x))
