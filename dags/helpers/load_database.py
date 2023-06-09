@@ -46,9 +46,9 @@ def func_load_dataframe(df, table_name, mysql_conn_id):
     mysqlHook.insert_rows(table=table_name, rows=df.values.tolist(), target_fields=list(df.columns))
 
 
-def func_download_dataframe(fields, table, mysql_conn_id):
+def func_download_dataframe(fields, table, mysql_conn_id, distinct=False):
     fields_str = ", ".join(fields)
-    query = "SELECT DISTINCT {} FROM {}".format(fields_str, table)
+    query = "SELECT {} {} FROM {}".format(("DISTINCT" if distinct else ""), fields_str, table)
     mysqlHook = MySqlHook(mysql_conn_id=mysql_conn_id)
     results = mysqlHook.get_records(sql=query)
     df = pd.DataFrame(results, columns=fields) if results else pd.DataFrame(columns=fields)
